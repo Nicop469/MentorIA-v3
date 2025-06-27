@@ -31,7 +31,9 @@ useEffect(() => {
     setLoading(true);
     try {
       // Fetch accounting practice questions JSON
-      const res = await fetch('/preguntas-contabilidad.json');
+      const res = await fetch(
+        `${import.meta.env.BASE_URL}preguntas-contabilidad.json`
+      );
       if (!res.ok) {
         throw new Error(`HTTP ${res.status}`);
       }

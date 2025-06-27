@@ -7,7 +7,7 @@ interface Exercise {
   id?: string;
   item_id?: string;
   title?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 /**
@@ -21,11 +21,19 @@ interface Exercise {
 export default function AccountingCourse(): JSX.Element {
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [selectedId, setSelectedId] = useState<string | number | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   // Load JSON on mount
   useEffect(() => {
+    setLoading(true);
     fetch('/preguntas-contabilidad.json')
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
+        return res.json();
+      })
       .then((data: Exercise[] | Exercise) => {
         // Support object or array structure
         if (Array.isArray(data)) {
@@ -33,10 +41,13 @@ export default function AccountingCourse(): JSX.Element {
         } else if (data) {
           setExercises([data]);
         }
+        setError(null);
       })
       .catch((err) => {
         console.error('Failed to load accounting questions:', err);
-      });
+        setError('Error al cargar los ejercicios');
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   const selectedExercise: Exercise | undefined = exercises.find(
@@ -46,7 +57,16 @@ export default function AccountingCourse(): JSX.Element {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
-      <div className="flex max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <h1 className="text-3xl font-bold mb-6">Contabilidad</h1>
+        {loading && (
+          <p className="text-gray-500">Cargando ejercicios...</p>
+        )}
+        {error && !loading && (
+          <p className="text-red-600 mb-4">{error}</p>
+        )}
+      </div>
+      <div className="flex max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
         {/* Side navigation */}
         <aside className="w-64 bg-white border-r border-gray-200 p-4 hidden md:block">
           <h2 className="text-lg font-semibold mb-4">Exercises</h2>
@@ -77,7 +97,13 @@ export default function AccountingCourse(): JSX.Element {
           {selectedExercise ? (
             <ExerciseDetail exercise={selectedExercise} />
           ) : (
-            <p className="text-gray-500">Select an exercise from the list.</p>
+            <p className="text-gray-500">
+              {loading || error
+                ? null
+                : exercises.length === 0
+                ? 'No hay ejercicios disponibles.'
+                : 'Select an exercise from the list.'}
+            </p>
           )}
         </main>
       </div>

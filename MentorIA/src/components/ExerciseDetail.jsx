@@ -5,8 +5,10 @@ import TAccountEditor from './TAccountEditor';
 import IncomeStatement from './IncomeStatement';
 
 /**
- * ExerciseDetail displays the full context for an accounting exercise and
- * optionally the list of items/questions once the user starts the exercise.
+ * ExerciseDetail
+ * --------------
+ * Renders the full context of a single accounting exercise and, when the user
+ * decides to start, shows the interactive questions below that context.
  *
  * Props:
  *   - exercise: object containing title, context_text, balance sheets, etc.
@@ -164,12 +166,16 @@ function ExerciseDetail({ exercise }) {
 
       {started && (
         <div className="space-y-6 mt-4">
-          {exercise.items?.map((item) => (
-            <div key={item.item_id} className="bg-white p-4 rounded-md shadow">
-              <p className="mb-2 font-medium">{item.prompt}</p>
-              {renderItemInput(item)}
-            </div>
-          ))}
+          {exercise.items && exercise.items.length > 0 ? (
+            exercise.items.map((item) => (
+              <div key={item.item_id} className="bg-white p-4 rounded-md shadow">
+                <p className="mb-2 font-medium">{item.prompt}</p>
+                {renderItemInput(item)}
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-500">No hay preguntas para este ejercicio.</p>
+          )}
         </div>
       )}
     </div>

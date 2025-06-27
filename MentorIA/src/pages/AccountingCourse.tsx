@@ -26,15 +26,20 @@ export default function AccountingCourse(): JSX.Element {
 
   // Load JSON on mount
   useEffect(() => {
-    setLoading(true);
-    fetch('/preguntas-contabilidad.json')
-      .then((res) => {
+   // Define async function so we can use try/catch
+    const loadExercises = async (): Promise<void> => {
+      // Start loading state before fetch
+      setLoading(true);
+      try {
+        // Fetch accounting practice questions JSON
+        const res = await fetch('/preguntas-contabilidad.json');
+        // Throw error if response is not OK
         if (!res.ok) {
           throw new Error(`HTTP ${res.status}`);
         }
-        return res.json();
-      })
-      .then((data: Exercise[] | Exercise) => {
+        // Parse JSON content
+        const data: Exercise[] | Exercise = await res.json();
+        // Support object or array structure when saving
         // Support object or array structure
         if (Array.isArray(data)) {
           setExercises(data);
@@ -42,12 +47,17 @@ export default function AccountingCourse(): JSX.Element {
           setExercises([data]);
         }
         setError(null);
-      })
-      .catch((err) => {
+         } catch (err) {
+        // Log error and display friendly message
         console.error('Failed to load accounting questions:', err);
-        setError('Error al cargar los ejercicios');
-      })
-      .finally(() => setLoading(false));
+        setError('Error loading exercises. Please try again.');
+      } finally {
+        // Stop loading state after fetch completes
+        setLoading(false);
+      }
+    };
+
+    loadExercises();
   }, []);
 
   const selectedExercise: Exercise | undefined = exercises.find(

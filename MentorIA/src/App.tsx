@@ -30,7 +30,6 @@ function App() {
           <Route path="/" element={<WelcomePage />} />
           <Route path="/courses" element={<CourseSelectionPage />} />
           <Route path="/vark/:courseId" element={<VARKQuestionnairePage />} />
-          <Route path="/accounting" element={<AccountingCourse />} />
           <Route path="/diagnostic/:courseId" element={<DiagnosticPage />} />
           <Route path="/results/:courseId" element={<ResultsPage />} />
           <Route path="/onboarding/:courseId" element={<CourseOnboardingPage />} />

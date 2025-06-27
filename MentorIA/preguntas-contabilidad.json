@@ -1,0 +1,290 @@
+
+
+{
+  "case_id": "PUC_ACCOUNTING_TEMA_II_2024",
+  "title": "Estado de Fuentes y Usos de Fondos - La Mejor Limpieza",
+  "context_text": "Los siguientes son los balances al 31 de diciembre de 2022 y 2023 de la empresa de artículos de aseo La Mejor Limpieza. Se muestra además el Estado de Resultados de la empresa para el año 2023 y otra información adicional. El estudiante debe presentar la cuenta T Maestra del Estado de Fuentes y Usos de Fondos usando como definición de Fondos el Capital de Trabajo Neto.",
+  "topic_tags": ["accounting", "capital de trabajo", "estado de flujo de fondos"],
+  "balance_2022": [
+    {"classification": "Activo Circulante", "account": "Caja", "amount": 100000},
+    {"classification": "Activo Circulante", "account": "Cuentas por Cobrar", "amount": 25000},
+    {"classification": "Activo Circulante", "account": "PDI", "amount": -2000},
+    {"classification": "Activo Circulante", "account": "Existencias", "amount": 50000},
+    {"classification": "Activo Fijo", "account": "Máquinas", "amount": 25000},
+    {"classification": "Activo Fijo", "account": "Depreciación Acumulada", "amount": -4500},
+    {"classification": "Activo Fijo", "account": "Terrenos", "amount": 5000},
+    {"classification": "Pasivo Circulante", "account": "Cuentas por Pagar", "amount": 4000},
+    {"classification": "Pasivo Circulante", "account": "Intereses por Pagar", "amount": 3000},
+    {"classification": "Pasivo Circulante", "account": "Impuestos por Pagar", "amount": 4000},
+    {"classification": "Pasivo Circulante", "account": "Sueldos por Pagar", "amount": 5000},
+    {"classification": "Pasivo No Circulante", "account": "Deuda LP con Banco A", "amount": 5000},
+    {"classification": "Pasivo No Circulante", "account": "Deuda LP con Banco B", "amount": 30000},
+    {"classification": "Patrimonio", "account": "Capital", "amount": 80000},
+    {"classification": "Patrimonio", "account": "Utilidades Retenidas", "amount": 67500}
+  ],
+  "section_totals_2022": {
+      "Activo Circulante": 173000,
+      "Activo Fijo": 25500,
+      "Total Activo": 198500,
+      "Pasivo Circulante": 16000,
+      "Pasivo No Circulante": 35000,
+      "Patrimonio": 147500,
+      "Total Pasivo y Patrimonio": 198500
+  },
+
+  "balance_2023": [
+    {"classification": "Activo Circulante", "account": "Caja", "amount": 120000},
+    {"classification": "Activo Circulante", "account": "Cuentas por Cobrar", "amount": 27000},
+    {"classification": "Activo Circulante", "account": "PDI", "amount": -1000},
+    {"classification": "Activo Circulante", "account": "Existencias", "amount": 60000},
+    {"classification": "Activo Fijo", "account": "Máquinas", "amount": 20000},
+    {"classification": "Activo Fijo", "account": "Depreciación Acumulada", "amount": -3000},
+    {"classification": "Activo Fijo", "account": "Terrenos", "amount": 3000},
+    {"classification": "Otros Activos Largo Plazo", "account": "Cuentas por Cobrar LP", "amount": 40000},
+    {"classification": "Pasivo Circulante", "account": "Cuentas por Pagar", "amount": -6000},
+    {"classification": "Pasivo Circulante", "account": "Intereses por Pagar", "amount": -2000},
+    {"classification": "Pasivo Circulante", "account": "Impuestos por Pagar", "amount": -3000},
+    {"classification": "Pasivo Circulante", "account": "Sueldos por Pagar", "amount": -3000},
+    {"classification": "Pasivo No Circulante", "account": "Deuda LP con Banco A", "amount": 0},
+    {"classification": "Pasivo No Circulante", "account": "Deuda LP con Banco B", "amount": -62700},
+    {"classification": "Patrimonio", "account": "Capital", "amount": -82000},
+    {"classification": "Patrimonio", "account": "Utilidades Retenidas", "amount": -107300}
+  ],
+   "section_totals": {
+      "Activo Circulante": 206000,
+      "Activo Fijo": 20000,
+      "Total Activo": 226000,
+      "Otros Activos Largo Plazo": 40000,
+      "Pasivo Circulante": 14000,
+      "Pasivo No Circulante": 62700,
+      "Patrimonio": 189300,
+      "Total Pasivo y Patrimonio": 226000
+    },
+    "income_statement_2023": {
+    "lines": [
+      { "concept": "Ingreso por Venta", "amount": 120000 },
+      { "concept": "Costo por Venta", "amount": -80000 },
+      { "concept": "Ganancia Bruta", "amount": 40000 },
+      { "concept": "Gasto por Depreciación", "amount": -1500 },
+      { "concept": "Gasto por Sueldos", "amount": -2000 },
+      { "concept": "Gasto por Incobrables", "amount": -500 },
+      { "concept": "Resultado Operacional", "amount": 36000 },
+      { "concept": "Utilidad Total por Ventas de Activos Fijos", "amount": 3000 },
+      { "concept": "Utilidad por Prepago Deuda Bancaria Largo Plazo", "amount": 3000 },
+      { "concept": "Gasto por Intereses", "amount": -200 },
+      { "concept": "Resultado No Operacional", "amount": 5800 },
+      { "concept": "Resultado Antes de Impuestos", "amount": 41800 },
+      { "concept": "Impuestos", "amount": -2000 },
+      { "concept": "Utilidad del Ejercicio", "amount": 39800 }
+    ],
+    "additional_info": [
+  {
+    "id": "info_1",
+    "text": "Si bien en la mayoría de las oportunidades la empresa compra sus existencias al contado, en algunas oportunidades lo hace usando crédito (Cuentas por Pagar) de corto plazo de parte de sus proveedores."
+  },
+  {
+    "id": "info_2",
+    "text": "Las ventas de existencias se hacen al contado o con crédito de corto plazo a sus clientes. Excepcionalmente en diciembre del 2023 se realizó una venta por $40.000 con crédito a dos años plazo. Por la venta se recibió una Cuenta por Cobrar de Largo Plazo."
+  },
+  {
+    "id": "info_3",
+    "text": "El 1 de enero de 2023 se vendió una máquina cuya depreciación acumulada a la fecha de la venta era de $3.000. La máquina, que estaba registrada a un costo histórico de $5.000, fue vendida en $3.000 al contado. No se realizaron compras de máquinas durante 2023."
+  },
+  {
+    "id": "info_4",
+    "text": "El 1 de enero de 2023 se vendió un terreno al contado. No se realizaron compras de terrenos durante 2023."
+  },
+  {
+    "id": "info_5",
+    "text": "En 2023, la empresa prepagó los $5.000 de deuda de largo plazo que tenía con el Banco A al 31/12/2022. La empresa desembolsó $2.000 en efectivo para prepagar la deuda."
+  },
+  {
+    "id": "info_6",
+    "text": "No se declararon ni pagaron dividendos durante 2023."
+  },
+  {
+    "id": "info_7",
+    "text": "Durante 2023 ocurrieron otras transacciones, no incluidas en la información anterior, que afectaron a las cuentas 'Deuda de Largo Plazo con Banco B' y 'Capital'. Usted debe determinar el monto y signo de estas transacciones, y asumir que tienen como contrapartida un cambio del mismo monto y signo en 'Caja'."
+}
+],
+"instructions": [
+  {
+    "id": "task_a",
+    "text": "Presente la cuenta T Maestra (o cuenta T de procedimiento) del Estado de Fuentes y Usos de Fondos usando como definición de 'Fondos' el Capital de Trabajo Neto (Activo circulante menos Pasivo circulante) para La Mejor Limpieza al cierre de 2023. Para obtener el puntaje completo, debe justificar cada valor con su respectivo asiento de procedimiento (o análisis). No se piden los asientos originales o hechos por la empresa durante el año, solamente se piden los de procedimiento."
+  },
+  {
+    "id": "task_b",
+    "text": "(Bonificación) Presente formalmente el Estado de Fuentes y Usos de Fondos usando como definición de 'Fondos' el Capital de Trabajo Neto con todas sus clasificaciones pertinentes. Esta pregunta es opcional y entrega hasta 5 puntos adicionales."
+  }
+],
+  "items": [
+    {
+      "item_id": "ENTRY_RESULTADO_EJERCICIO",
+      "prompt": "Registrar el asiento de analisis del resultado del ejercicio del año 2023.",
+      "correct_answer": "Debitar capital de trabajo operacional por $39.800; acreditar Utilidades Retenidas por $39.800.",
+      "difficulty_b": 0.5,
+      "discrimination_a": 1.0
+    },
+    {
+      "item_id": "ENTRY_DEPRECIACION",
+      "prompt": "Registrar el gasto por depreciación del ejercicio.",
+      "correct_answer": "Debitar capital de trabajo operacional por $1.500; acreditar Depreciación Acumulada por $1.500.",
+      "difficulty_b": 0.3,
+      "discrimination_a": 1.0
+    },
+    {
+      "item_id": "ENTRY_VENTA_MAQUINA",
+      "prompt": "Registrar la venta de la máquina (costo histórico $5.000, depreciación acumulada $3.000, precio venta $3.000).",
+      "correct_answer": "Debitar capital de trabajo de inversion por $3.000 y Depreciación Acumulada $3.000; acreditar Máquinas $5.000 y registrar capital de trabajo operacional por $1.000.",
+      "difficulty_b": 0.7,
+      "discrimination_a": 1.2
+    },
+    {
+      "item_id": "ENTRY_VENTA_TERRENO",
+      "prompt": "Registrar la venta de un terreno al contado.",
+      "correct_answer": "Debitar capital de trabajo de inversion por $4.000; acreditar Terrenos $2.000 y capital de trabajo operacional por $2.000.",
+      "difficulty_b": 0.6,
+      "discrimination_a": 1.1
+    },
+    {
+      "item_id": "ENTRY_CXC_LARGO_PLAZO",
+      "prompt": "Registrar la venta de existencias con crédito a dos años plazo por $40.000.",
+      "correct_answer": "Debitar Cuentas por Cobrar LP $40.000; acreditar capital de trabajo operacional por $40.000.",
+      "difficulty_b": 0.5,
+      "discrimination_a": 1.0
+    },
+    {
+      "item_id": "ENTRY_PAGO_PREPAGO_DEUDA",
+      "prompt": "Registrar el prepago de deuda de largo plazo con el Banco A por $5.000, desembolsando $2.000.",
+      "correct_answer": "Debitar Deuda LP Banco A $5.000; acreditar capital de trabajo financiero por $2.000 y registrar capital de trabajo operacional por $3.000.",
+      "difficulty_b": 0.8,
+      "discrimination_a": 1.3
+    },
+    {
+      "item_id": "ENTRY_AUMENTO_DEUDA_B",
+      "prompt": "Registrar el aumento de deuda LP con Banco B por $32.700.",
+      "correct_answer": "Debitar capital de trabajo financiero por $32.700; acreditar Deuda LP Banco B $32.700.",
+      "difficulty_b": 0.6,
+      "discrimination_a": 1.0
+    },
+    {
+      "item_id": "ENTRY_AUMENTO_CAPITAL",
+      "prompt": "Registrar el aumento de capital por $2.000.",
+      "correct_answer": "Debitar capital de trabajo financiero por $2.000; acreditar Capital $2.000.",
+      "difficulty_b": 0.5,
+      "discrimination_a": 1.0
+    },
+    {
+      "item_id": "ENTRY_GASTO_INTERESES",
+      "prompt": "Registrar el gasto por intereses del ejercicio.",
+      "correct_answer": "Debitar capital de trabajo operacional por $200; acreditar capital de trabajo financiero por $200.",
+      "difficulty_b": 0.4,
+      "discrimination_a": 1.0
+    },
+  {
+  "item_id": "ENTRY_CUENTA_T_MAESTRA",
+  "prompt": "Presente la cuenta T Maestra (o cuenta T de procedimiento) del Estado de Fuentes y Usos de Fondos usando como definición de 'Fondos' el Capital de Trabajo Neto al cierre de 2023. Clasifique cada movimiento según su naturaleza: operación, inversión o financiamiento.",
+  "t_account": {
+    "sides": {
+      "debit": [
+        {
+          "concept": "Saldo Inicial Capital de Trabajo",
+          "amount": 157000,
+          "category": "Saldo Inicial"
+        },
+        {
+          "concept": "Resultado del Ejercicio",
+          "amount": 39800,
+          "category": "Operación"
+        },
+        {
+          "concept": "Gasto por Depreciación",
+          "amount": 1500,
+          "category": "Operación"
+        },
+        {
+          "concept": "Venta de Máquina",
+          "amount": 3000,
+          "category": "Inversión"
+        },
+        {
+          "concept": "Venta de Terreno",
+          "amount": 4000,
+          "category": "Inversión"
+        },
+        {
+          "concept": "Aumento Deuda LP Banco B",
+          "amount": 32700,
+          "category": "Financiamiento"
+        },
+        {
+          "concept": "Aumento de Capital",
+          "amount": 2000,
+          "category": "Financiamiento"
+        }
+      ],
+      "credit": [
+        {
+          "concept": "Intereses por Pagar",
+          "amount": 200,
+          "category": "Financiamiento"
+        },
+        {
+          "concept": "Pago Prepago Deuda LP Banco A",
+          "amount": 2000,
+          "category": "Financiamiento"
+        }
+      ]
+    },
+    "saldo_final": 192000
+  },
+  "difficulty_b": 0.9,
+  "discrimination_a": 1.4
+}
+  ]
+}
+},
+{
+  "item_id": "ENTRY_EFUF_BONUS",
+  "prompt": "(BONUS) Presente formalmente el Estado de Fuentes y Usos de Fondos usando como definición de 'Fondos' el Capital de Trabajo Neto con todas sus clasificaciones pertinentes.",
+  "formal_statement": {
+    "sections": [
+      {
+        "category": "Capital de trabajo generado por actividades de la operación",
+        "movements": [
+          { "concept": "Resultado del Ejercicio", "amount": 39800 },
+          { "concept": "Gasto por Depreciación", "amount": 1500 },
+          { "concept": "Ventas a LP", "amount": -40000 },
+          { "concept": "Utilidad por Venta de Máquina", "amount": -1000 },
+          { "concept": "Utilidad por Venta de Terreno", "amount": -2000 },
+          { "concept": "Utilidad por Prepago Deuda Bancaria LP", "amount": -3000 },
+          { "concept": "Gasto por Intereses", "amount": 200 }
+        ],
+        "subtotal": 4500
+      },
+      {
+        "category": "Capital de trabajo generado por actividades de inversión",
+        "movements": [
+          { "concept": "Venta de Máquina", "amount": 3000 },
+          { "concept": "Venta de Terreno", "amount": 4000 }
+        ],
+        "subtotal": 7000
+      },
+      {
+        "category": "Capital de trabajo generado por actividades de financiamiento",
+        "movements": [
+          { "concept": "Aumento Deuda LP Banco B", "amount": 32700 },
+          { "concept": "Aumento de Capital", "amount": 2000 },
+          { "concept": "Intereses por Pagar", "amount": -200 },
+          { "concept": "Pago Prepago Deuda LP Banco A", "amount": -2000 }
+        ],
+        "subtotal": 32500
+      }
+    ],
+    "saldo_inicial": 157000,
+    "variacion_total": 35000,
+    "saldo_final": 192000
+  },
+  "difficulty_b": 1.0,
+  "discrimination_a": 1.5
+}

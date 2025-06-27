@@ -128,7 +128,7 @@ function FinancialStatements({ balance2022 = [], balance2023 = [], incomeStateme
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="bg-white p-4 rounded-md shadow space-y-6">
       {/* Balance Sheet */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {renderTable(assetClasses, 'Activos')}

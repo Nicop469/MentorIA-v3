@@ -6,6 +6,19 @@ import IncomeStatement from './IncomeStatement';
 // New consolidated financial statement component
 import FinancialStatements from './FinancialStatements';
 
+// Fallback data used when no exercise is provided
+const dummyExercise = {
+  balance_2022: [
+    { classification: 'Activo', account: 'Caja', amount: 0 },
+  ],
+  balance_2023: [
+    { classification: 'Activo', account: 'Caja', amount: 0 },
+  ],
+  income_statement_2023: {
+    lines: [{ concept: 'Ventas', amount: 0 }],
+  },
+};
+
 /**
  * ExerciseDetail
  * --------------
@@ -19,15 +32,15 @@ function ExerciseDetail({ exercise }) {
   const [started, setStarted] = useState(false);
   const [responses, setResponses] = useState({});
 
-  if (!exercise) return null;
+  const ex = exercise ?? dummyExercise;
 
   // Collect unique account names from balance data for EntryInput selects
   const accounts = useMemo(() => {
-    const b2022 = exercise.balance_2022 || [];
-    const b2023 = exercise.balance_2023 || [];
+    const b2022 = ex.balance_2022 || [];
+    const b2023 = ex.balance_2023 || [];
     const set = new Set([...b2022, ...b2023].map((b) => b.account));
     return Array.from(set);
-  }, [exercise]);
+  }, [ex]);
 
   const handleChange = (id, value) => {
     setResponses((prev) => ({ ...prev, [id]: value }));
@@ -126,7 +139,7 @@ function ExerciseDetail({ exercise }) {
   };
 
   const additional =
-    exercise.additional_info?.map((info, i) => ({
+    ex.additional_info?.map((info, i) => ({
       title: `Información ${i + 1}`,
       content: info.text,
     })) || [];
@@ -134,22 +147,22 @@ function ExerciseDetail({ exercise }) {
   return (
     <div className="space-y-4">
       {/* Context always visible */}
-      <h1 className="text-2xl font-bold">{exercise.title}</h1>
-      {exercise.context_text && <p>{exercise.context_text}</p>}
-      {renderBalance('2022', exercise.balance_2022, exercise.section_totals_2022)}
-      {renderBalance('2023', exercise.balance_2023, exercise.section_totals)}
-      {exercise.income_statement_2023 && (
+      <h1 className="text-2xl font-bold">{ex.title}</h1>
+      {ex.context_text && <p>{ex.context_text}</p>}
+      {renderBalance('2022', ex.balance_2022, ex.section_totals_2022)}
+      {renderBalance('2023', ex.balance_2023, ex.section_totals)}
+      {ex.income_statement_2023 && (
         <IncomeStatement
           year={2023}
-          lines={exercise.income_statement_2023.lines || []}
+          lines={ex.income_statement_2023.lines || []}
         />
       )}
       {additional.length > 0 && <AdditionalInfo items={additional} />}
-      {exercise.instructions && exercise.instructions.length > 0 && (
+      {ex.instructions && ex.instructions.length > 0 && (
         <div className="bg-white p-4 rounded-md shadow">
           <h2 className="text-xl font-semibold mb-2">Instrucciones</h2>
           <ul className="list-disc pl-5 space-y-1">
-            {exercise.instructions.map((inst) => (
+            {ex.instructions.map((inst) => (
               <li key={inst.id}>{inst.text}</li>
             ))}
           </ul>
@@ -170,13 +183,13 @@ function ExerciseDetail({ exercise }) {
         <div className="space-y-6 mt-4">
           {/* Consolidated financial statements shown before the questions */}
           <FinancialStatements
-            balance2022={exercise.balance_2022 || []}
-            balance2023={exercise.balance_2023 || []}
-            incomeStatement={exercise.income_statement_2023?.lines || []}
+            balance2022={ex.balance_2022 || []}
+            balance2023={ex.balance_2023 || []}
+            incomeStatement={ex.income_statement_2023?.lines || []}
           />
 
-          {exercise.items && exercise.items.length > 0 ? (
-            exercise.items.map((item) => (
+          {ex.items && ex.items.length > 0 ? (
+            ex.items.map((item) => (
               <div key={item.item_id} className="bg-white p-4 rounded-md shadow">
                 <p className="mb-2 font-medium">{item.prompt}</p>
                 {renderItemInput(item)}

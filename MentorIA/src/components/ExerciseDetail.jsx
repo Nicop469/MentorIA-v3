@@ -1,10 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import AdditionalInfo from './AdditionalInfo';
 import EntryInput from './EntryInput';
-import TAccountEditor from './TAccountEditor';
 import IncomeStatement from './IncomeStatement';
-// New consolidated financial statement component
-import FinancialStatements from './FinancialStatements';
 
 // Fallback data used when no exercise is provided
 const dummyExercise = {
@@ -30,7 +27,10 @@ const dummyExercise = {
  */
 function ExerciseDetail({ exercise }) {
   const [started, setStarted] = useState(false);
-  const [responses, setResponses] = useState({});
+  // Number of entry inputs the student wishes to create
+  const [entryCount, setEntryCount] = useState(1);
+  // Array holding data for each created entry
+  const [entries, setEntries] = useState([]);
 
   const ex = exercise ?? dummyExercise;
 
@@ -42,8 +42,11 @@ function ExerciseDetail({ exercise }) {
     return Array.from(set);
   }, [ex]);
 
-  const handleChange = (id, value) => {
-    setResponses((prev) => ({ ...prev, [id]: value }));
+  // Update a single entry in the entries array
+  const handleEntryChange = (index, value) => {
+    setEntries((prev) =>
+      prev.map((entry, i) => (i === index ? value : entry))
+    );
   };
 
   // Helper to render balances grouped by classification
@@ -105,38 +108,6 @@ function ExerciseDetail({ exercise }) {
     );
   };
 
-  const renderItemInput = (item) => {
-    if (item.t_account || item.formal_statement) {
-      const rows = responses[item.item_id] || [];
-      return (
-        <TAccountEditor
-          rows={rows}
-          onChange={(rows) => handleChange(item.item_id, rows)}
-        />
-      );
-    }
-
-    if (item.item_id && item.item_id.startsWith('ENTRY_')) {
-      const value = responses[item.item_id] || {};
-      return (
-        <EntryInput
-          accounts={accounts}
-          value={value}
-          onChange={(val) => handleChange(item.item_id, val)}
-        />
-      );
-    }
-
-    const value = responses[item.item_id] || '';
-    return (
-      <textarea
-        className="w-full p-2 border rounded"
-        rows={4}
-        value={value}
-        onChange={(e) => handleChange(item.item_id, e.target.value)}
-      />
-    );
-  };
 
   const additional =
     ex.additional_info?.map((info, i) => ({
@@ -181,22 +152,48 @@ function ExerciseDetail({ exercise }) {
 
       {started && (
         <div className="space-y-6 mt-4">
-          {/* Consolidated financial statements shown before the questions */}
-          <FinancialStatements
-            balance2022={ex.balance_2022 || []}
-            balance2023={ex.balance_2023 || []}
-            incomeStatement={ex.income_statement_2023?.lines || []}
-          />
+          {/* Input to decide how many entries the student will register */}
+          {entries.length === 0 && (
+            <div className="flex items-end space-x-2">
+              <label className="font-medium">Número de asientos:</label>
+              <input
+                type="number"
+                min="1"
+                value={entryCount}
+                onChange={(e) => setEntryCount(Number(e.target.value))}
+                className="w-20 p-1 border rounded"
+              />
+              <button
+                type="button"
+                onClick={() =>
+                  setEntries(
+                    Array.from({ length: entryCount }, () => ({
+                      debits: [{ account: '', amount: '' }],
+                      credits: [{ account: '', amount: '' }],
+                      text: ''
+                    }))
+                  )
+                }
+                className="px-3 py-1 bg-primary-600 text-white rounded"
+              >
+                Crear Asientos
+              </button>
+            </div>
+          )}
 
-          {ex.items && ex.items.length > 0 ? (
-            ex.items.map((item) => (
-              <div key={item.item_id} className="bg-white p-4 rounded-md shadow">
-                <p className="mb-2 font-medium">{item.prompt}</p>
-                {renderItemInput(item)}
-              </div>
-            ))
-          ) : (
-            <p className="text-gray-500">No hay preguntas para este ejercicio.</p>
+          {entries.length > 0 && (
+            <div className="space-y-4">
+              <h2 className="text-xl font-semibold">Asientos a Registrar</h2>
+              {entries.map((entry, idx) => (
+                <div key={idx} className="bg-white p-4 rounded-md shadow">
+                  <EntryInput
+                    accounts={accounts}
+                    value={entry}
+                    onChange={(val) => handleEntryChange(idx, val)}
+                  />
+                </div>
+              ))}
+            </div>
           )}
         </div>
       )}

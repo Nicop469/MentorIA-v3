@@ -1,7 +1,8 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 import AdditionalInfo from './AdditionalInfo';
 import EntryInput from './EntryInput';
 import IncomeStatement from './IncomeStatement';
+import { Trash2 } from 'lucide-react';
 
 // Fallback data used when no exercise is provided
 const dummyExercise = {
@@ -27,9 +28,7 @@ const dummyExercise = {
  */
 function ExerciseDetail({ exercise }) {
   const [started, setStarted] = useState(false);
-  // Number of entry inputs the student wishes to create
-  const [entryCount, setEntryCount] = useState(1);
-  // Array holding data for each created entry
+  // List of journal entries currently being edited
   const [entries, setEntries] = useState([]);
 
   const ex = exercise ?? dummyExercise;
@@ -42,11 +41,26 @@ function ExerciseDetail({ exercise }) {
     return Array.from(set);
   }, [ex]);
 
+  // Helper that creates a fresh empty entry object
+  const createBlankEntry = useCallback(
+    () => ({
+      debits: [{ account: '', amount: '' }],
+      credits: [{ account: '', amount: '' }],
+      text: '',
+    }),
+    []
+  );
+
   // Update a single entry in the entries array
   const handleEntryChange = (index, value) => {
     setEntries((prev) =>
       prev.map((entry, i) => (i === index ? value : entry))
     );
+  };
+
+  // Remove an entry at a given index
+  const removeEntry = (index) => {
+    setEntries((prev) => prev.filter((_, i) => i !== index));
   };
 
   // Helper to render balances grouped by classification
@@ -152,40 +166,26 @@ function ExerciseDetail({ exercise }) {
 
       {started && (
         <div className="space-y-6 mt-4">
-          {/* Input to decide how many entries the student will register */}
-          {entries.length === 0 && (
-            <div className="flex items-end space-x-2">
-              <label className="font-medium">Número de asientos:</label>
-              <input
-                type="number"
-                min="1"
-                value={entryCount}
-                onChange={(e) => setEntryCount(Number(e.target.value))}
-                className="w-20 p-1 border rounded"
-              />
-              <button
-                type="button"
-                onClick={() =>
-                  setEntries(
-                    Array.from({ length: entryCount }, () => ({
-                      debits: [{ account: '', amount: '' }],
-                      credits: [{ account: '', amount: '' }],
-                      text: ''
-                    }))
-                  )
-                }
-                className="px-3 py-1 bg-primary-600 text-white rounded"
-              >
-                Crear Asientos
-              </button>
-            </div>
-          )}
+          {/* Button to dynamically add a new empty journal entry */}
+          <button
+            type="button"
+            onClick={() => setEntries([...entries, createBlankEntry()])}
+            className="px-3 py-1 bg-primary-600 text-white rounded"
+          >
+            Agregar Asiento
+          </button>
 
           {entries.length > 0 && (
             <div className="space-y-4">
               <h2 className="text-xl font-semibold">Asientos a Registrar</h2>
               {entries.map((entry, idx) => (
-                <div key={idx} className="bg-white p-4 rounded-md shadow">
+                <div key={idx} className="bg-white p-4 rounded-md shadow space-y-2">
+                  {/* Button to remove this entry */}
+                  <div className="flex justify-end">
+                    <button type="button" onClick={() => removeEntry(idx)} className="text-red-600">
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
                   <EntryInput
                     accounts={accounts}
                     value={entry}

@@ -1,11 +1,12 @@
 {
   "scripts": {
-    "test": "node node_modules/vitest/vitest.mjs"
+    "test": "node node_modules/vitest/vitest.mjs run --config MentorIA/vitest.config.ts"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
+    "happy-dom": "^18.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "vitest": "^3.2.4"

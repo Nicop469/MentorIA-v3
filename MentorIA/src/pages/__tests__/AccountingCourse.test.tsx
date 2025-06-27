@@ -1,6 +1,6 @@
-import React from 'react';
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach, Mock } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import AccountingCourse from '../AccountingCourse';
 
 const mockExercises = [
@@ -10,7 +10,7 @@ const mockExercises = [
 
 describe('AccountingCourse', () => {
   beforeEach(() => {
-    vi.spyOn(global, 'fetch').mockResolvedValue({
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue({
       ok: true,
       json: vi.fn().mockResolvedValue(mockExercises),
     } as unknown as Response);
@@ -33,15 +33,17 @@ describe('AccountingCourse', () => {
     for (const ex of mockExercises) {
       expect(await screen.findByText(ex.title)).toBeInTheDocument();
     }
-<<<<<<< HEAD
-     // Message prompting to select an exercise should be visible
+// Message prompting to select an exercise should be visible
     expect(
       screen.getByText('Select an exercise from the list.')
     ).toBeInTheDocument();
+
+    // Loading message should disappear after exercises are loaded
+    expect(screen.queryByText('Loading exercises...')).not.toBeInTheDocument();
   });
 
   it('shows "No exercises available." when API returns empty array', async () => {
-    (fetch as unknown as vi.Mock).mockResolvedValueOnce({
+    (fetch as unknown as Mock).mockResolvedValueOnce({
       ok: true,
       json: vi.fn().mockResolvedValue([]),
     } as unknown as Response);
@@ -52,14 +54,10 @@ describe('AccountingCourse', () => {
   });
 
   it('shows error message on fetch failure', async () => {
-    (fetch as unknown as vi.Mock).mockRejectedValueOnce(new Error('fail'));
+    (fetch as unknown as Mock).mockRejectedValueOnce(new Error('fail'));
 
     render(<AccountingCourse />);
 
     expect(await screen.findByText('Error loading exercises')).toBeInTheDocument();
-=======
-
-    expect(screen.queryByText('Loading exercises...')).not.toBeInTheDocument();
->>>>>>> 9308518091e81dca19f8a041923d279904397149
   });
 });

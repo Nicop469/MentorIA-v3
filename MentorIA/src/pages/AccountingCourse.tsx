@@ -24,33 +24,38 @@ export default function AccountingCourse(): JSX.Element {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Load JSON on mount
-  useEffect(() => {
-    const loadExercises = async (): Promise<void> => {
-      setLoading(true);
-      try {
-        const res = await fetch('/preguntas-contabilidad.json');
-        if (!res.ok) {
-          throw new Error(`HTTP ${res.status}`);
-        }
-        const data: Exercise[] | Exercise = await res.json();
-
-        if (Array.isArray(data)) {
-          setExercises(data);
-        } else if (data) {
-          setExercises([data]);
-        }
-        setError(null);
-      } catch (err) {
-        console.error('Failed to load accounting questions:', err);
-        setError('Error loading exercises. Please try again.');
-      } finally {
-        setLoading(false);
+// Load JSON on mount
+useEffect(() => {
+  // Define async function so we can use try/catch
+  const loadExercises = async (): Promise<void> => {
+    setLoading(true);
+    try {
+      // Fetch accounting practice questions JSON
+      const res = await fetch('/preguntas-contabilidad.json');
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
       }
-    };
+      // Parse JSON content
+      const data: Exercise[] | Exercise = await res.json();
+      // Support object or array structure
+      if (Array.isArray(data)) {
+        setExercises(data);
+      } else if (data) {
+        setExercises([data]);
+      }
+      setError(null);
+    } catch (err) {
+      // Log error and display friendly message
+      console.error('Failed to load accounting questions:', err);
+      setError('Error loading exercises. Please try again.');
+    } finally {
+      // Stop loading state after fetch completes
+      setLoading(false);
+    }
+  };
 
-    void loadExercises();
-  }, []);
+  loadExercises();
+}, []);
 
   const selectedExercise: Exercise | undefined = exercises.find(
     (ex, idx) => (ex.case_id || ex.id || idx) === selectedId

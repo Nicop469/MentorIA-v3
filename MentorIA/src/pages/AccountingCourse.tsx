@@ -26,6 +26,7 @@ export default function AccountingCourse(): JSX.Element {
 
   // Load JSON on mount
   useEffect(() => {
+<<<<<<< HEAD
    // Define async function so we can use try/catch
     const loadExercises = async (): Promise<void> => {
       // Start loading state before fetch
@@ -34,6 +35,13 @@ export default function AccountingCourse(): JSX.Element {
         // Fetch accounting practice questions JSON
         const res = await fetch('/preguntas-contabilidad.json');
         // Throw error if response is not OK
+=======
+    setLoading(true);
+    // File is stored under the public directory so it can be fetched directly
+    // from the root path during development and production builds
+    fetch('/preguntas-contabilidad.json')
+      .then((res) => {
+>>>>>>> 9308518091e81dca19f8a041923d279904397149
         if (!res.ok) {
           throw new Error(`HTTP ${res.status}`);
         }
@@ -51,6 +59,7 @@ export default function AccountingCourse(): JSX.Element {
         // Log error and display friendly message
         console.error('Failed to load accounting questions:', err);
         setError('Error loading exercises. Please try again.');
+<<<<<<< HEAD
       } finally {
         // Stop loading state after fetch completes
         setLoading(false);
@@ -58,6 +67,10 @@ export default function AccountingCourse(): JSX.Element {
     };
 
     loadExercises();
+=======
+      })
+      .finally(() => setLoading(false));
+>>>>>>> 9308518091e81dca19f8a041923d279904397149
   }, []);
 
   const selectedExercise: Exercise | undefined = exercises.find(
@@ -70,7 +83,7 @@ export default function AccountingCourse(): JSX.Element {
       <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
         <h1 className="text-3xl font-bold mb-6">Contabilidad</h1>
         {loading && (
-          <p className="text-gray-500">Cargando ejercicios...</p>
+          <p className="text-gray-500">Loading exercises...</p>
         )}
         {error && !loading && (
           <p className="text-red-600 mb-4">{error}</p>

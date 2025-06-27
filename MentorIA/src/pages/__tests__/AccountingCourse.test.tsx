@@ -27,9 +27,13 @@ describe('AccountingCourse', () => {
 
     // After fetch resolves, should list exercises
 
+    // Loading message should appear initially
+    expect(screen.getByText('Loading exercises...')).toBeInTheDocument();
+
     for (const ex of mockExercises) {
       expect(await screen.findByText(ex.title)).toBeInTheDocument();
     }
+<<<<<<< HEAD
      // Message prompting to select an exercise should be visible
     expect(
       screen.getByText('Select an exercise from the list.')
@@ -53,5 +57,9 @@ describe('AccountingCourse', () => {
     render(<AccountingCourse />);
 
     expect(await screen.findByText('Error loading exercises')).toBeInTheDocument();
+=======
+
+    expect(screen.queryByText('Loading exercises...')).not.toBeInTheDocument();
+>>>>>>> 9308518091e81dca19f8a041923d279904397149
   });
 });

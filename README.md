@@ -2,6 +2,11 @@
 
 This project provides an adaptive learning platform built with React.
 
+The example accounting questions used in the demo now live under
+`MentorIA/public/preguntas-contabilidad.json`. Static assets placed in the
+`public` directory are served from the root path, so the file can still be
+fetched via `/preguntas-contabilidad.json` in the frontend code.
+
 ## Data Types
 
 Courses are described by the `Course` interface found in `project/src/types`.

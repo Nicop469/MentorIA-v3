@@ -3,6 +3,8 @@ import AdditionalInfo from './AdditionalInfo';
 import EntryInput from './EntryInput';
 import TAccountEditor from './TAccountEditor';
 import IncomeStatement from './IncomeStatement';
+// New consolidated financial statement component
+import FinancialStatements from './FinancialStatements';
 
 /**
  * ExerciseDetail
@@ -166,6 +168,13 @@ function ExerciseDetail({ exercise }) {
 
       {started && (
         <div className="space-y-6 mt-4">
+          {/* Consolidated financial statements shown before the questions */}
+          <FinancialStatements
+            balance2022={exercise.balance_2022 || []}
+            balance2023={exercise.balance_2023 || []}
+            incomeStatement={exercise.income_statement_2023?.lines || []}
+          />
+
           {exercise.items && exercise.items.length > 0 ? (
             exercise.items.map((item) => (
               <div key={item.item_id} className="bg-white p-4 rounded-md shadow">

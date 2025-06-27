@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach, Mock } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+// Use the Vitest compatible version so that "expect" is correctly patched
+import '@testing-library/jest-dom/vitest';
 import AccountingCourse from '../AccountingCourse';
 
 const mockExercises = [

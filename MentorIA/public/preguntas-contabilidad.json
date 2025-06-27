@@ -76,7 +76,8 @@
       { "concept": "Resultado Antes de Impuestos", "amount": 41800 },
       { "concept": "Impuestos", "amount": -2000 },
       { "concept": "Utilidad del Ejercicio", "amount": 39800 }
-    ],
+    ]
+    },
     "additional_info": [
   {
     "id": "info_1",
@@ -240,11 +241,8 @@
   },
   "difficulty_b": 0.9,
   "discrimination_a": 1.4
-}
-  ]
-}
-},
-{
+  },
+  {
   "item_id": "ENTRY_EFUF_BONUS",
   "prompt": "(BONUS) Presente formalmente el Estado de Fuentes y Usos de Fondos usando como definición de 'Fondos' el Capital de Trabajo Neto con todas sus clasificaciones pertinentes.",
   "formal_statement": {
@@ -287,4 +285,6 @@
   },
   "difficulty_b": 1.0,
   "discrimination_a": 1.5
+}
+  ]
 }

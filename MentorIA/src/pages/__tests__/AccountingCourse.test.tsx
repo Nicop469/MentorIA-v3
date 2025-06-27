@@ -22,8 +22,13 @@ describe('AccountingCourse', () => {
   it('renders exercise titles after fetch', async () => {
     render(<AccountingCourse />);
 
+    // Loading message should appear initially
+    expect(screen.getByText('Loading exercises...')).toBeInTheDocument();
+
     for (const ex of mockExercises) {
       expect(await screen.findByText(ex.title)).toBeInTheDocument();
     }
+
+    expect(screen.queryByText('Loading exercises...')).not.toBeInTheDocument();
   });
 });

@@ -27,6 +27,8 @@ export default function AccountingCourse(): JSX.Element {
   // Load JSON on mount
   useEffect(() => {
     setLoading(true);
+    // File is stored under the public directory so it can be fetched directly
+    // from the root path during development and production builds
     fetch('/preguntas-contabilidad.json')
       .then((res) => {
         if (!res.ok) {

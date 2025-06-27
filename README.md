@@ -13,3 +13,7 @@ Courses are described by the `Course` interface found in `project/src/types`.
 A course may optionally include structured `chapters` which are defined by the
 `Chapter` type. Each chapter lists its concepts so that teachers can create
 targeted practice sessions.
+
+## Running Tests
+
+Execute `npm test --prefix MentorIA` to run the Vitest suite in non-watch mode.

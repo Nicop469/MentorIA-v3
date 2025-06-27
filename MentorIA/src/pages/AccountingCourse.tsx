@@ -47,7 +47,7 @@ export default function AccountingCourse(): JSX.Element {
       })
       .catch((err) => {
         console.error('Failed to load accounting questions:', err);
-        setError('Error al cargar los ejercicios');
+        setError('Error loading exercises. Please try again.');
       })
       .finally(() => setLoading(false));
   }, []);
@@ -62,7 +62,7 @@ export default function AccountingCourse(): JSX.Element {
       <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
         <h1 className="text-3xl font-bold mb-6">Contabilidad</h1>
         {loading && (
-          <p className="text-gray-500">Cargando ejercicios...</p>
+          <p className="text-gray-500">Loading exercises...</p>
         )}
         {error && !loading && (
           <p className="text-red-600 mb-4">{error}</p>

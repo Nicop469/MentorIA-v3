@@ -1,32 +1,51 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { X } from 'lucide-react';
 
 /**
- * EntryInput lets the user select debit and credit accounts for a journal
- * entry and specify a single amount. When no list of accounts is supplied it
- * falls back to a simple text input which can be used for plain questions.
+ * EntryInput
+ * ----------
+ * Interactive component used in accounting exercises to build journal entries.
+ * Students can dynamically add multiple debit and credit lines, each with its
+ * own account selection and amount. Totals are calculated automatically and the
+ * entry can only be submitted when debit and credit totals match.
  *
  * Props:
- *   - accounts: array of account names.
- *   - value: { debits: string[], credits: string[], amount: number|string, text: string }
- *   - onChange: callback fired with the updated value object.
+ *   - accounts: array of account names available for selection.
+ *   - value:   { debits: [{ account, amount }], credits: [{ account, amount }], text: string }
+ *   - onChange: callback fired whenever the entry data changes.
  */
-function EntryInput({ accounts = [], value = {}, onChange }) {
-  const {
-    debits = [],
-    credits = [],
-    amount = '',
-    text = ''
-  } = value;
+export default function EntryInput({ accounts = [], value = {}, onChange }) {
+  // Initialize local state from provided value or sensible defaults
+  const [debits, setDebits] = useState(value.debits || [{ account: '', amount: '' }]);
+  const [credits, setCredits] = useState(value.credits || [{ account: '', amount: '' }]);
+  const [text, setText] = useState(value.text || '');
 
-  const update = (field, newValue) => {
-    onChange({ ...value, [field]: newValue });
+  // Notify parent component whenever our state changes
+  useEffect(() => {
+    onChange({ debits, credits, text });
+  }, [debits, credits, text, onChange]);
+
+  // Utility to add/remove lines
+  const addDebit = () => setDebits([...debits, { account: '', amount: '' }]);
+  const addCredit = () => setCredits([...credits, { account: '', amount: '' }]);
+  const removeDebit = (idx) => setDebits(debits.filter((_, i) => i !== idx));
+  const removeCredit = (idx) => setCredits(credits.filter((_, i) => i !== idx));
+
+  const handleDebitChange = (idx, field, val) => {
+    const updated = debits.map((d, i) => (i === idx ? { ...d, [field]: val } : d));
+    setDebits(updated);
+  };
+  const handleCreditChange = (idx, field, val) => {
+    const updated = credits.map((c, i) => (i === idx ? { ...c, [field]: val } : c));
+    setCredits(updated);
   };
 
-  const handleSelect = (field, options) => {
-    const selected = Array.from(options).map((o) => o.value);
-    update(field, selected);
-  };
+  // Calculate subtotals
+  const totalDebit = debits.reduce((sum, d) => sum + Number(d.amount || 0), 0);
+  const totalCredit = credits.reduce((sum, c) => sum + Number(c.amount || 0), 0);
+  const balanced = totalDebit === totalCredit;
 
+  // Simple text fallback when no list of accounts is provided
   if (accounts.length === 0) {
     return (
       <div className="space-y-2">
@@ -34,7 +53,7 @@ function EntryInput({ accounts = [], value = {}, onChange }) {
         <input
           type="text"
           value={text}
-          onChange={(e) => update('text', e.target.value)}
+          onChange={(e) => setText(e.target.value)}
           className="w-full p-2 border rounded"
         />
       </div>
@@ -42,50 +61,97 @@ function EntryInput({ accounts = [], value = {}, onChange }) {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <div>
-        <label className="block text-sm font-medium mb-1">Cuenta(s) Deudora</label>
-        <select
-          multiple
-          value={debits}
-          onChange={(e) => handleSelect('debits', e.target.selectedOptions)}
-          className="w-full p-2 border rounded h-32"
-        >
-          {accounts.map((acc) => (
-            <option key={acc} value={acc}>
-              {acc}
-            </option>
-          ))}
-        </select>
+    <div className="space-y-6">
+      {/* Debit lines */}
+      <div className="border rounded-md p-4 space-y-3">
+        <div className="flex justify-between items-center">
+          <h3 className="font-semibold">Debits</h3>
+          <button type="button" onClick={addDebit} className="text-sm text-primary-600">
+            + Add Debit
+          </button>
+        </div>
+        {debits.map((line, idx) => (
+          <div key={idx} className="flex items-center space-x-2">
+            <select
+              value={line.account}
+              onChange={(e) => handleDebitChange(idx, 'account', e.target.value)}
+              className="flex-1 p-2 border rounded"
+            >
+              <option value="">Select account</option>
+              {accounts.map((acc) => (
+                <option key={acc} value={acc}>
+                  {acc}
+                </option>
+              ))}
+            </select>
+            <input
+              type="number"
+              value={line.amount}
+              onChange={(e) => handleDebitChange(idx, 'amount', e.target.value)}
+              className="w-32 p-2 border rounded"
+            />
+            <button type="button" onClick={() => removeDebit(idx)} className="text-red-600">
+              <X size={16} />
+            </button>
+          </div>
+        ))}
+        <div className="flex justify-end font-bold">Total Debe: {totalDebit.toLocaleString()}</div>
       </div>
 
-      <div>
-        <label className="block text-sm font-medium mb-1">Cuenta(s) Acreedora</label>
-        <select
-          multiple
-          value={credits}
-          onChange={(e) => handleSelect('credits', e.target.selectedOptions)}
-          className="w-full p-2 border rounded h-32"
-        >
-          {accounts.map((acc) => (
-            <option key={acc} value={acc}>
-              {acc}
-            </option>
-          ))}
-        </select>
+      {/* Credit lines */}
+      <div className="border rounded-md p-4 space-y-3">
+        <div className="flex justify-between items-center">
+          <h3 className="font-semibold">Credits</h3>
+          <button type="button" onClick={addCredit} className="text-sm text-primary-600">
+            + Add Credit
+          </button>
+        </div>
+        {credits.map((line, idx) => (
+          <div key={idx} className="flex items-center space-x-2">
+            <select
+              value={line.account}
+              onChange={(e) => handleCreditChange(idx, 'account', e.target.value)}
+              className="flex-1 p-2 border rounded"
+            >
+              <option value="">Select account</option>
+              {accounts.map((acc) => (
+                <option key={acc} value={acc}>
+                  {acc}
+                </option>
+              ))}
+            </select>
+            <input
+              type="number"
+              value={line.amount}
+              onChange={(e) => handleCreditChange(idx, 'amount', e.target.value)}
+              className="w-32 p-2 border rounded"
+            />
+            <button type="button" onClick={() => removeCredit(idx)} className="text-red-600">
+              <X size={16} />
+            </button>
+          </div>
+        ))}
+        <div className="flex justify-end font-bold">Total Haber: {totalCredit.toLocaleString()}</div>
       </div>
 
-      <div>
-        <label className="block text-sm font-medium mb-1">Monto</label>
-        <input
-          type="number"
-          value={amount}
-          onChange={(e) => update('amount', e.target.value)}
-          className="w-full p-2 border rounded"
-        />
+      {/* Totals and submit */}
+      <div className="flex justify-end space-x-6 font-bold border-t pt-3">
+        <span>Total Debe: {totalDebit.toLocaleString()}</span>
+        <span>Total Haber: {totalCredit.toLocaleString()}</span>
+      </div>
+      <div className="flex justify-end">
+        <button
+          type="button"
+          disabled={!balanced}
+          className={`px-4 py-2 rounded-md ${
+            balanced
+              ? 'bg-primary-600 text-white'
+              : 'bg-gray-300 text-gray-600 cursor-not-allowed'
+          }`}
+        >
+          Submit Entry
+        </button>
       </div>
     </div>
   );
 }
-
-export default EntryInput;

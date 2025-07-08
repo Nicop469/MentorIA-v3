@@ -1,6 +1,23 @@
 {
   "scripts": {
+<<<<<<< HEAD
     "test": "vitest run --config vitest.config.ts"
+=======
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "test": "node node_modules/vitest/vitest.mjs run"
+  },
+  "dependencies": {
+    "@rollup/wasm-node": "^4.44.1",
+    "chart.js": "^4.4.1",
+    "framer-motion": "^11.0.5",
+    "lucide-react": "^0.344.0",
+    "react-chartjs-2": "^5.2.0",
+    "react-router-dom": "^6.22.1",
+    "uuid": "^9.0.1"
+>>>>>>> 6081a64c5865cb343d3c022acb0117ef93d68591
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",

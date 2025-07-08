@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach, Mock } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 // Use the Vitest compatible version so that "expect" is correctly patched
 import '@testing-library/jest-dom/vitest';
 import AccountingCourse from '../AccountingCourse';
@@ -22,7 +23,11 @@ describe('AccountingCourse', () => {
   });
 
   it('renders English messages and exercise titles after fetch', async () => {
-    render(<AccountingCourse />);
+    render(
+      <MemoryRouter>
+        <AccountingCourse />
+      </MemoryRouter>
+    );
     // Initially shows loading message in English
     expect(screen.getByText('Loading exercises...')).toBeInTheDocument();
 
@@ -49,7 +54,11 @@ describe('AccountingCourse', () => {
       json: vi.fn().mockResolvedValue([]),
     } as unknown as Response);
 
-    render(<AccountingCourse />);
+    render(
+      <MemoryRouter>
+        <AccountingCourse />
+      </MemoryRouter>
+    );
 
     expect(await screen.findByText('No exercises available.')).toBeInTheDocument();
   });
@@ -57,7 +66,11 @@ describe('AccountingCourse', () => {
   it('shows error message on fetch failure', async () => {
     (fetch as unknown as Mock).mockRejectedValueOnce(new Error('fail'));
 
-    render(<AccountingCourse />);
+    render(
+      <MemoryRouter>
+        <AccountingCourse />
+      </MemoryRouter>
+    );
 
     expect(await screen.findByText('Error loading exercises')).toBeInTheDocument();
   });

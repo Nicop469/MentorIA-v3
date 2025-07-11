@@ -7,6 +7,7 @@ import { selectNextQuestion, adjustDifficulty } from '../utils/adaptiveLogic';
 import QuestionCard from '../components/QuestionCard';
 import { useUser } from '../context/UserContext';
 import Navigation from '../components/Navigation';
+import LoadingSpinner from '../components/LoadingSpinner';
 import { v4 as uuidv4 } from 'uuid';
 
 const MAX_PRACTICE_QUESTIONS = 20;
@@ -171,7 +172,7 @@ const PracticeModePage: React.FC = () => {
         
         {isLoading && !isPracticeComplete && (
           <div className="flex justify-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-600"></div>
+            <LoadingSpinner />
           </div>
         )}
         
@@ -191,12 +192,12 @@ const PracticeModePage: React.FC = () => {
             className="text-center py-8"
           >
             <h2 className="text-2xl font-semibold mb-4">Practice Complete!</h2>
-            <p className="text-gray-600 mb-6">
-              Analyzing your results and preparing your performance summary...
-            </p>
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-600 mx-auto"></div>
-          </motion.div>
-        )}
+          <p className="text-gray-600 mb-6">
+            Analyzing your results and preparing your performance summary...
+          </p>
+          <LoadingSpinner className="mx-auto" />
+        </motion.div>
+      )}
       </div>
     </div>
   );

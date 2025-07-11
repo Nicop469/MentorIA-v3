@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Course } from '../types';
 import { getCourses } from '../services/storageService';
 import Navigation from '../components/Navigation';
+import LoadingSpinner from '../components/LoadingSpinner';
 import { BookOpen, ChevronDown, ChevronUp } from 'lucide-react';
 
 const CourseOnboardingPage: React.FC = () => {
@@ -38,7 +39,7 @@ const CourseOnboardingPage: React.FC = () => {
   if (!course) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-600"></div>
+        <LoadingSpinner />
       </div>
     );
   }

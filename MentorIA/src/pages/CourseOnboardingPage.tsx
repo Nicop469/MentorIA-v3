@@ -141,7 +141,11 @@ const CourseOnboardingPage: React.FC = () => {
           </button>
           
           <button
-            onClick={() => navigate(`/practice/${courseId}`)}
+            onClick={() =>
+              courseId === 'accounting'
+                ? navigate('/contabilidad')
+                : navigate(`/practice/${courseId}`)
+            }
             className="px-6 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors"
           >
             Start Practice

@@ -1,10 +1,15 @@
+/**
+ * @vitest-environment jsdom
+ */
+
+import React from 'react';
 import { describe, it, expect, vi, beforeEach, afterEach, Mock } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-// Use the Vitest compatible version so that "expect" is correctly patched
 import '@testing-library/jest-dom/vitest';
 import AccountingCourse from '../AccountingCourse';
 
+// Mock data and types
 const mockExercises = [
   { id: 1, title: 'Ejercicio de Prueba 1' },
   { id: 2, title: 'Ejercicio de Prueba 2' },
@@ -22,33 +27,46 @@ describe('AccountingCourse', () => {
     vi.restoreAllMocks();
   });
 
-  it('renders English messages and exercise titles after fetch', async () => {
+  it('renders exercise titles and messages after fetch', async () => {
     render(
       <MemoryRouter>
         <AccountingCourse />
       </MemoryRouter>
     );
-    // Initially shows loading message in English
-    expect(screen.getByText('Loading exercises...')).toBeInTheDocument();
-
-    // After fetch resolves, should list exercises
 
     // Loading message should appear initially
     expect(screen.getByText('Loading exercises...')).toBeInTheDocument();
 
+    // After fetch, each exercise title should render
     for (const ex of mockExercises) {
       expect(await screen.findByText(ex.title)).toBeInTheDocument();
     }
-// Message prompting to select an exercise should be visible
+
+    // Prompt to select an exercise
     expect(
       screen.getByText('Select an exercise from the list.')
     ).toBeInTheDocument();
 
-    // Loading message should disappear after exercises are loaded
+    // Loading message should disappear
     expect(screen.queryByText('Loading exercises...')).not.toBeInTheDocument();
   });
 
-  it('shows "No exercises available." when API returns empty array', async () => {
+  it('displays the list of exercises in the side navigation', async () => {
+    render(
+      <MemoryRouter>
+        <AccountingCourse />
+      </MemoryRouter>
+    );
+
+    // Wait for exercise buttons
+    const buttons = await screen.findAllByRole('button', { name: /Ejercicio de Prueba/ });
+    expect(buttons).toHaveLength(mockExercises.length);
+    mockExercises.forEach((ex, idx) => {
+      expect(buttons[idx]).toHaveTextContent(ex.title);
+    });
+  });
+
+  it('shows "No hay ejercicios disponibles." when API returns empty array', async () => {
     (fetch as unknown as Mock).mockResolvedValueOnce({
       ok: true,
       json: vi.fn().mockResolvedValue([]),
@@ -60,11 +78,13 @@ describe('AccountingCourse', () => {
       </MemoryRouter>
     );
 
-    expect(await screen.findByText('No exercises available.')).toBeInTheDocument();
+    expect(
+      await screen.findByText('No hay ejercicios disponibles.')
+    ).toBeInTheDocument();
   });
 
-  it('shows error message on fetch failure', async () => {
-    (fetch as unknown as Mock).mockRejectedValueOnce(new Error('fail'));
+  it('shows full error message on fetch failure', async () => {
+    (fetch as unknown as Mock).mockRejectedValueOnce(new Error('Network failure'));
 
     render(
       <MemoryRouter>
@@ -72,6 +92,48 @@ describe('AccountingCourse', () => {
       </MemoryRouter>
     );
 
-    expect(await screen.findByText('Error loading exercises')).toBeInTheDocument();
+    expect(
+      await screen.findByText('Error loading exercises. Please try again.')
+    ).toBeInTheDocument();
+  });
+
+  it('shows full error message when server responds with non-ok status', async () => {
+    (fetch as unknown as Mock).mockResolvedValueOnce({
+      ok: false,
+      status: 500,
+      json: vi.fn(),
+    } as unknown as Response);
+
+    render(
+      <MemoryRouter>
+        <AccountingCourse />
+      </MemoryRouter>
+    );
+
+    expect(
+      await screen.findByText('Error loading exercises. Please try again.')
+    ).toBeInTheDocument();
+  });
+
+  it('fetches the JSON from the correct URL', async () => {
+    // Spy on fetch to inspect the called URL
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce({
+      ok: true,
+      json: vi.fn().mockResolvedValue([]),
+    } as unknown as Response);
+
+    render(
+      <MemoryRouter>
+        <AccountingCourse />
+      </MemoryRouter>
+    );
+
+    // Wait until fetch is invoked and error message appears
+    await screen.findByText('No hay ejercicios disponibles.');
+
+    // Assert the URL ends with the JSON filename
+    expect(fetchSpy).toHaveBeenCalledWith(
+      expect.stringMatching(/preguntas-contabilidad\.json$/)
+    );
   });
 });

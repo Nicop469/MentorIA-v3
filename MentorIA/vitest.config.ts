@@ -1,22 +1,19 @@
+// vitest.config.ts
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
-import { fileURLToPath } from 'url';
-import { dirname, resolve } from 'path';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   plugins: [react()],
-  root: __dirname,
-  resolve: {
-    alias: {
-      react: resolve(__dirname, '../node_modules/react'),
-      'react-dom': resolve(__dirname, '../node_modules/react-dom'),
-    },
-  },
   test: {
+    // Simula un DOM real para que los Hooks funcionen
     environment: 'jsdom',
+    // Permite usar describe/it/expect sin importarlos
     globals: true,
-    setupFiles: [resolve(__dirname, 'src/setupTests.ts')],
+    // Carga tu setup para mocks antes de los tests
+    setupFiles: ['./src/setupTests.ts'],
+    // Asegura que Vitest transforme los archivos .ts/.tsx con el entorno web
+    transformMode: {
+      web: [/\.[jt]sx?$/],
+    },
   },
 });

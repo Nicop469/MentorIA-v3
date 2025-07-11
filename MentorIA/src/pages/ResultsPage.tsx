@@ -5,6 +5,7 @@ import { DiagnosticResult } from '../types';
 import { useUser } from '../context/UserContext';
 import Navigation from '../components/Navigation';
 import PerformanceChart from '../components/PerformanceChart';
+import LoadingSpinner from '../components/LoadingSpinner';
 import { ArrowRight, Award, Clock, CheckCircle } from 'lucide-react';
 
 const ResultsPage: React.FC = () => {
@@ -48,7 +49,7 @@ const ResultsPage: React.FC = () => {
   if (!result) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-600"></div>
+        <LoadingSpinner />
       </div>
     );
   }

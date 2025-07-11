@@ -5,6 +5,7 @@ import { Question, QuestionAttempt, DiagnosticResult } from '../types';
 import { getCourses } from '../services/storageService';
 import { selectNextQuestion, adjustDifficulty, calculateMetrics } from '../utils/adaptiveLogic';
 import QuestionCard from '../components/QuestionCard';
+import LoadingSpinner from '../components/LoadingSpinner';
 import { useUser } from '../context/UserContext';
 import Navigation from '../components/Navigation';
 
@@ -139,7 +140,7 @@ const DiagnosticPage: React.FC = () => {
         
         {isLoading && !isDiagnosticComplete && (
           <div className="flex justify-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-600"></div>
+            <LoadingSpinner />
           </div>
         )}
         
@@ -159,12 +160,12 @@ const DiagnosticPage: React.FC = () => {
             className="text-center py-8"
           >
             <h2 className="text-2xl font-semibold mb-4">Diagnostic Complete!</h2>
-            <p className="text-gray-600 mb-6">
-              Analyzing your results and preparing your personalized learning path...
-            </p>
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-600 mx-auto"></div>
-          </motion.div>
-        )}
+          <p className="text-gray-600 mb-6">
+            Analyzing your results and preparing your personalized learning path...
+          </p>
+          <LoadingSpinner className="mx-auto" />
+        </motion.div>
+      )}
       </div>
     </div>
   );

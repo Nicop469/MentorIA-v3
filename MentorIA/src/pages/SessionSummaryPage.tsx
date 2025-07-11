@@ -5,6 +5,7 @@ import { PracticeSession, QuestionAttempt } from '../types';
 import { useUser } from '../context/UserContext';
 import Navigation from '../components/Navigation';
 import PerformanceChart from '../components/PerformanceChart';
+import LoadingSpinner from '../components/LoadingSpinner';
 import { Home, RefreshCcw, TrendingUp, Award } from 'lucide-react';
 
 const SessionSummaryPage: React.FC = () => {
@@ -58,7 +59,7 @@ const SessionSummaryPage: React.FC = () => {
   if (!session) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-600"></div>
+        <LoadingSpinner />
       </div>
     );
   }

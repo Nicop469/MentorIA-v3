@@ -6,7 +6,6 @@ import { initializeStorage } from './services/storageService';
 // Pages
 import WelcomePage from './pages/WelcomePage';
 import CourseSelectionPage from './pages/CourseSelectionPage';
-import VARKQuestionnairePage from './pages/VARKQuestionnairePage';
 import DiagnosticPage from './pages/DiagnosticPage';
 import ResultsPage from './pages/ResultsPage';
 import PracticeModePage from './pages/PracticeModePage';
@@ -29,7 +28,6 @@ function App() {
         <Routes>
           <Route path="/" element={<WelcomePage />} />
           <Route path="/courses" element={<CourseSelectionPage />} />
-          <Route path="/vark/:courseId" element={<VARKQuestionnairePage />} />
           <Route path="/diagnostic/:courseId" element={<DiagnosticPage />} />
           <Route path="/results/:courseId" element={<ResultsPage />} />
           <Route path="/onboarding/:courseId" element={<CourseOnboardingPage />} />

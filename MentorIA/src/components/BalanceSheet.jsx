@@ -1,4 +1,5 @@
 import React from 'react';
+import Card from './ui/Card';
 
 const BalanceSheet = ({ year, data = {} }) => {
   const { assets = [], liabilities = [], equity = [] } = data;
@@ -6,7 +7,8 @@ const BalanceSheet = ({ year, data = {} }) => {
   const total = (arr) => arr.reduce((sum, item) => sum + (item.amount || 0), 0);
 
   const renderSection = (title, items) => (
-    <table className="min-w-full divide-y divide-gray-200 text-sm mb-4">
+    <Card className="p-4 mb-4 overflow-auto">
+      <table className="min-w-full divide-y divide-gray-200 text-sm">
       <thead className="bg-gray-50">
         <tr>
           <th className="px-4 py-2 text-left font-medium text-gray-700" colSpan="2">
@@ -28,7 +30,8 @@ const BalanceSheet = ({ year, data = {} }) => {
           </td>
         </tr>
       </tbody>
-    </table>
+      </table>
+    </Card>
   );
 
   return (

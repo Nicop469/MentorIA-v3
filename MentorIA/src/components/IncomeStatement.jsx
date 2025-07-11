@@ -1,4 +1,5 @@
 import React from 'react';
+import Card from './ui/Card';
 
 /**
  * IncomeStatement
@@ -8,7 +9,7 @@ import React from 'react';
  * support both.
  */
 const IncomeStatement = ({ year = 2023, lines = [] }) => (
-  <div className="overflow-x-auto">
+  <Card className="p-4 overflow-auto">
     <h2 className="text-lg font-semibold mb-2">Estado de Resultados {year}</h2>
     <table className="min-w-full divide-y divide-gray-200 text-sm">
       <thead className="bg-gray-50">
@@ -32,7 +33,7 @@ const IncomeStatement = ({ year = 2023, lines = [] }) => (
         ))}
       </tbody>
     </table>
-  </div>
+  </Card>
 );
 
 export default IncomeStatement;

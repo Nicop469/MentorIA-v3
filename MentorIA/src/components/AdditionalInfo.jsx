@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Card from './ui/Card';
 
 const AdditionalInfo = ({ items = [] }) => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -10,20 +11,21 @@ const AdditionalInfo = ({ items = [] }) => {
   return (
     <div className="space-y-2">
       {items.map((item, index) => (
-        <div key={index} className="border rounded-md">
+        <Card key={index} className="overflow-hidden">
           <button
             type="button"
             onClick={() => toggle(index)}
-            className="w-full p-2 text-left font-medium bg-gray-100"
+            aria-expanded={openIndex === index}
+            className="w-full p-3 text-left font-semibold bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
           >
             {item.title}
           </button>
           {openIndex === index && (
-            <div className="p-2 bg-white border-t">
-              {typeof item.content === 'string' ? <p>{item.content}</p> : item.content}
+            <div className="p-3 border-t">
+              {typeof item.content === 'string' ? <p className="text-gray-700">{item.content}</p> : item.content}
             </div>
           )}
-        </div>
+        </Card>
       ))}
     </div>
   );

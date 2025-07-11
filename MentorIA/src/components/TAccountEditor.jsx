@@ -1,4 +1,6 @@
 import React from 'react';
+import Card from './ui/Card';
+import Button from './ui/Button';
 
 /**
  * TAccountEditor renders a dynamic table used for Cuenta T Maestra or
@@ -35,7 +37,8 @@ function TAccountEditor({ rows = [], onChange }) {
 
   return (
     <div>
-      <table className="min-w-full text-sm border">
+      <Card className="p-4 overflow-auto">
+        <table className="min-w-full text-sm">
         <thead className="bg-gray-100">
           <tr>
             <th className="p-2 border">Concepto</th>
@@ -99,14 +102,11 @@ function TAccountEditor({ rows = [], onChange }) {
             </tr>
           ))}
         </tbody>
-      </table>
-      <button
-        type="button"
-        onClick={addRow}
-        className="mt-3 px-4 py-2 bg-primary-600 text-white rounded"
-      >
+        </table>
+      </Card>
+      <Button type="button" onClick={addRow} className="mt-3">
         Agregar fila
-      </button>
+      </Button>
     </div>
   );
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import { Course } from '../types';
 import { motion } from 'framer-motion';
 import { BookOpen, User } from 'lucide-react';
+import Button from './ui/Button';
 
 interface CourseCardProps {
   course: Course;
@@ -49,14 +50,11 @@ const CourseCard: React.FC<CourseCardProps> = ({
           </div>
         )}
         
-        <button
-          onClick={() => onSelect(course.id)}
-          className="w-full bg-primary-600 text-white py-2 rounded-md hover:bg-primary-700 transition-colors flex items-center justify-center"
-        >
+        <Button onClick={() => onSelect(course.id)} className="w-full flex items-center justify-center">
           <span>
             {isFrameworkCourse ? 'Seleccionar cap\u00edtulo' : 'Seleccionar curso'}
           </span>
-        </button>
+        </Button>
       </div>
     </motion.div>
   );

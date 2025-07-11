@@ -2,6 +2,8 @@ import React from 'react';
 import { Subtopic, Concept } from '../types/structuredCourse';
 import ConceptForm from './ConceptForm';
 import { v4 as uuidv4 } from 'uuid';
+import Card from './ui/Card';
+import Button from './ui/Button';
 
 interface SubtopicFormProps {
   subtopic: Subtopic;
@@ -29,7 +31,7 @@ const SubtopicForm: React.FC<SubtopicFormProps> = ({ subtopic, onChange, onDelet
   };
 
   return (
-    <div className="p-4 border rounded-lg mb-4">
+    <Card className="p-4 mb-4 space-y-2">
       <div className="flex justify-between items-center mb-2">
         <input
           type="text"
@@ -38,9 +40,9 @@ const SubtopicForm: React.FC<SubtopicFormProps> = ({ subtopic, onChange, onDelet
           placeholder="Subtopic title"
           className="flex-1 p-2 border rounded-lg"
         />
-        <button type="button" onClick={onDelete} className="ml-2 text-red-600">
+        <Button type="button" onClick={onDelete} className="ml-2 bg-red-600 hover:bg-red-700">
           Remove
-        </button>
+        </Button>
       </div>
       {subtopic.concepts.map((concept, index) => (
         <ConceptForm
@@ -50,10 +52,10 @@ const SubtopicForm: React.FC<SubtopicFormProps> = ({ subtopic, onChange, onDelet
           onDelete={() => deleteConcept(index)}
         />
       ))}
-      <button type="button" onClick={addConcept} className="text-sm text-primary-600 mt-2">
+      <Button type="button" onClick={addConcept} className="text-sm mt-2">
         + Add Concept
-      </button>
-    </div>
+      </Button>
+    </Card>
   );
 };
 

@@ -30,7 +30,7 @@ const CourseSelectionPage: React.FC = () => {
   }, []);
   
   const handleSelectStandardCourse = (courseId: string) => {
-    navigate(`/vark/${courseId}`);
+    navigate(`/diagnostic/${courseId}`);
   };
   
   const handleSelectFrameworkCourse = (courseId: string) => {

@@ -2,6 +2,8 @@ import React from 'react';
 import { Chapter, Subtopic } from '../types/structuredCourse';
 import SubtopicForm from './SubtopicForm';
 import { v4 as uuidv4 } from 'uuid';
+import Card from './ui/Card';
+import Button from './ui/Button';
 
 interface ChapterFormProps {
   chapter: Chapter;
@@ -29,7 +31,7 @@ const ChapterForm: React.FC<ChapterFormProps> = ({ chapter, onChange, onDelete }
   };
 
   return (
-    <div className="p-4 border rounded-lg mb-6">
+    <Card className="p-4 mb-6 space-y-4">
       <div className="flex justify-between items-center mb-3">
         <input
           type="text"
@@ -38,9 +40,9 @@ const ChapterForm: React.FC<ChapterFormProps> = ({ chapter, onChange, onDelete }
           placeholder="Chapter title"
           className="flex-1 p-2 border rounded-lg"
         />
-        <button type="button" onClick={onDelete} className="ml-2 text-red-600">
+        <Button type="button" onClick={onDelete} className="ml-2 bg-red-600 hover:bg-red-700">
           Remove
-        </button>
+        </Button>
       </div>
       {chapter.subtopics.map((subtopic, index) => (
         <SubtopicForm
@@ -50,10 +52,10 @@ const ChapterForm: React.FC<ChapterFormProps> = ({ chapter, onChange, onDelete }
           onDelete={() => deleteSubtopic(index)}
         />
       ))}
-      <button type="button" onClick={addSubtopic} className="text-sm text-primary-600 mt-2">
+      <Button type="button" onClick={addSubtopic} className="text-sm mt-2">
         + Add Subtopic
-      </button>
-    </div>
+      </Button>
+    </Card>
   );
 };
 

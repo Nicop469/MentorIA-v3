@@ -5,7 +5,10 @@ interface LoadingSpinnerProps {
 }
 
 const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ className = '' }) => (
-  <div className={`animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-600 ${className}`}></div>
+  <div
+    role="status"
+    className={`animate-spin rounded-full h-12 w-12 border-4 border-primary-600 border-t-transparent ${className}`}
+  />
 );
 
 export default LoadingSpinner;

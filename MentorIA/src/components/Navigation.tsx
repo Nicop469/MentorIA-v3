@@ -31,7 +31,7 @@ const Navigation: React.FC = () => {
               <button
                 key={item.path}
                 onClick={() => navigate(item.path)}
-                className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
+                className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary-500 ${
                   location.pathname === item.path
                     ? 'border-primary-500 text-gray-900'
                     : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
@@ -67,7 +67,7 @@ const Navigation: React.FC = () => {
             <button
               key={item.path}
               onClick={() => navigate(item.path)}
-              className={`flex flex-col items-center py-2 ${
+              className={`flex flex-col items-center py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 ${
                 location.pathname === item.path
                   ? 'text-primary-600'
                   : 'text-gray-500'

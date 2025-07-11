@@ -3,6 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 import ChapterForm from './ChapterForm';
 import { Chapter as StructuredChapter } from '../types/structuredCourse';
 import { CourseFramework } from '../types/courseFramework';
+import Card from './ui/Card';
+import Button from './ui/Button';
 
 interface Props {
   course?: CourseFramework;
@@ -88,7 +90,8 @@ const CourseFrameworkBuilder: React.FC<Props> = ({ course, teacherId, onSave, on
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-4 rounded-lg border space-y-4">
+    <form onSubmit={handleSubmit}>
+      <Card className="p-4 space-y-4">
       <div>
         <label className="block text-sm font-medium mb-1">Course Name</label>
         <input
@@ -120,19 +123,20 @@ const CourseFrameworkBuilder: React.FC<Props> = ({ course, teacherId, onSave, on
             onDelete={() => deleteChapter(index)}
           />
         ))}
-        <button type="button" onClick={addChapter} className="text-sm text-primary-600">
+        <Button type="button" onClick={addChapter} className="text-sm">
           + Add Chapter
-        </button>
+        </Button>
       </div>
 
       <div className="pt-4 flex justify-end space-x-4">
-        <button type="button" onClick={onCancel} className="px-4 py-2 text-gray-700 bg-gray-200 rounded-md">
+        <Button type="button" onClick={onCancel} className="bg-gray-200 text-gray-700 hover:bg-gray-300">
           Cancel
-        </button>
-        <button type="submit" className="px-4 py-2 bg-primary-600 text-white rounded-lg">
+        </Button>
+        <Button type="submit">
           Save Course
-        </button>
+        </Button>
       </div>
+      </Card>
     </form>
   );
 };

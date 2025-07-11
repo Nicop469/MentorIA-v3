@@ -1,5 +1,6 @@
 import React from 'react';
 import { Concept } from '../types/structuredCourse';
+import Button from './ui/Button';
 
 interface ConceptFormProps {
   concept: Concept;
@@ -17,9 +18,9 @@ const ConceptForm: React.FC<ConceptFormProps> = ({ concept, onChange, onDelete }
         placeholder="Concept title"
         className="flex-1 p-2 border rounded-lg"
       />
-      <button type="button" onClick={onDelete} className="ml-2 text-red-600">
+      <Button type="button" onClick={onDelete} className="ml-2 bg-red-600 hover:bg-red-700">
         Remove
-      </button>
+      </Button>
     </div>
   );
 };

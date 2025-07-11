@@ -10,7 +10,7 @@ the frontend code so deployments under different base URLs work correctly.
 
 ## Data Types
 
-Courses are described by the `Course` interface found in `project/src/types`.
+Courses are described by the `Course` interface found in `MentorIA/src/types`.
 A course may optionally include structured `chapters` which are defined by the
 `Chapter` type. Each chapter lists its concepts so that teachers can create
 targeted practice sessions.
